@@ -1,0 +1,1240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Hotel_Reservation_SystemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Bank_details">
+          <Key>
+            <PropertyRef Name="Bank_id" />
+          </Key>
+          <Property Name="Bank_id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Booking">
+          <Key>
+            <PropertyRef Name="Booking_id" />
+          </Key>
+          <Property Name="Booking_id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Customer_id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="Hotel_id" Type="varchar" MaxLength="7" Nullable="false" />
+          <Property Name="No_Of_AC_Rooms" Type="int" />
+          <Property Name="No_Of_Non_AC_Rooms" Type="int" Nullable="false" />
+          <Property Name="T_id" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="Date_booking" Type="date" />
+          <Property Name="Date_checkin" Type="date" />
+          <Property Name="Date_checkout" Type="date" />
+          <Property Name="no_adult" Type="int" Nullable="false" />
+          <Property Name="no_child" Type="int" />
+          <Property Name="no_nights" Type="int" />
+        </EntityType>
+        <EntityType Name="Card_details">
+          <Key>
+            <PropertyRef Name="card_no" />
+          </Key>
+          <Property Name="card_no" Type="int" Nullable="false" />
+          <Property Name="name_on_card" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="cvc_no" Type="int" Nullable="false" />
+          <Property Name="pin" Type="int" Nullable="false" />
+          <Property Name="account_no" Type="int" Nullable="false" />
+          <Property Name="exp_date" Type="date" Nullable="false" />
+          <Property Name="Bank_id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="card_type" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="c_contact" Type="bigint" Nullable="false" />
+          <Property Name="c_email" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Dob" Type="date" Nullable="false" />
+          <Property Name="pincode" Type="int" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Hotels">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="varchar" MaxLength="7" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="hotel_description" Type="varchar(max)" Nullable="false" />
+          <Property Name="pincode" Type="int" Nullable="false" />
+          <Property Name="manager_id" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="no_of_ac_rooms" Type="int" />
+          <Property Name="no_of_non_ac_rooms" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Managers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="m_contact" Type="bigint" Nullable="false" />
+          <Property Name="m_email" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="Hotel_id" Type="varchar" MaxLength="7" Nullable="false" />
+          <Property Name="customer_Id" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="booking_name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="total_Cost" Type="int" Nullable="false" />
+          <Property Name="card_number" Type="int" Nullable="false" />
+          <Property Name="card_type" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PinCodes">
+          <Key>
+            <PropertyRef Name="pin" />
+          </Key>
+          <Property Name="pin" Type="int" Nullable="false" />
+          <Property Name="state" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="city" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Rooms">
+          <Key>
+            <PropertyRef Name="hotel_id" />
+            <PropertyRef Name="room_No" />
+          </Key>
+          <Property Name="hotel_id" Type="varchar" MaxLength="7" Nullable="false" />
+          <Property Name="room_No" Type="int" Nullable="false" />
+          <Property Name="room_type" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="price_adult" Type="int" Nullable="false" />
+          <Property Name="price_child" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_card_bank_id">
+          <End Role="Bank_details" Type="Self.Bank_details" Multiplicity="1" />
+          <End Role="Card_details" Type="Self.Card_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bank_details">
+              <PropertyRef Name="Bank_id" />
+            </Principal>
+            <Dependent Role="Card_details">
+              <PropertyRef Name="Bank_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Customer_id">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="Customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Hotel_id">
+          <End Role="Hotels" Type="Self.Hotels" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hotels">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="Hotel_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hotels_Managers">
+          <End Role="Managers" Type="Self.Managers" Multiplicity="1" />
+          <End Role="Hotels" Type="Self.Hotels" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Managers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Hotels">
+              <PropertyRef Name="manager_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hotels_PinCodes_id">
+          <End Role="PinCodes" Type="Self.PinCodes" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Hotels" Type="Self.Hotels" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PinCodes">
+              <PropertyRef Name="pin" />
+            </Principal>
+            <Dependent Role="Hotels">
+              <PropertyRef Name="pincode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Payment_Card_details">
+          <End Role="Card_details" Type="Self.Card_details" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Card_details">
+              <PropertyRef Name="card_no" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="card_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Payment_Hotels_id">
+          <End Role="Hotels" Type="Self.Hotels" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hotels">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="Hotel_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_pinCode_cust">
+          <End Role="PinCodes" Type="Self.PinCodes" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Customers" Type="Self.Customers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PinCodes">
+              <PropertyRef Name="pin" />
+            </Principal>
+            <Dependent Role="Customers">
+              <PropertyRef Name="pincode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Rooms_Hotel_Id">
+          <End Role="Hotels" Type="Self.Hotels" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Rooms" Type="Self.Rooms" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hotels">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Rooms">
+              <PropertyRef Name="hotel_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_T_id">
+          <End Role="Payment" Type="Self.Payment" Multiplicity="1" />
+          <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Payment">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="T_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="Delete_booking" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Booking_id" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="Delete_customer" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Customer_id" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="Delete_hotel" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Hotel_id" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="Delete_manager" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Manager_id" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="Delete_payment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Payment_id" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetBookingDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Booking_id" Type="varchar" Mode="In" />
+          <Parameter Name="Hotel_id" Type="varchar" Mode="InOut" />
+          <Parameter Name="Booking_Date" Type="date" Mode="InOut" />
+          <Parameter Name="Arrival_Date" Type="date" Mode="InOut" />
+          <Parameter Name="Departure_Date" Type="date" Mode="InOut" />
+          <Parameter Name="Number_of_Adults" Type="int" Mode="InOut" />
+          <Parameter Name="Number_of_Children" Type="int" Mode="InOut" />
+          <Parameter Name="Number_of_Nights" Type="int" Mode="InOut" />
+          <Parameter Name="Number_of_AC_Rooms" Type="int" Mode="InOut" />
+          <Parameter Name="Number_of_Non_AC_Rooms" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="GetCities" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetCitiesStates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetCustomerDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="customer_id" Type="varchar" Mode="In" />
+          <Parameter Name="name" Type="varchar" Mode="InOut" />
+          <Parameter Name="c_contact" Type="bigint" Mode="InOut" />
+          <Parameter Name="c_email" Type="varchar" Mode="InOut" />
+          <Parameter Name="dob" Type="date" Mode="InOut" />
+          <Parameter Name="pincode" Type="int" Mode="InOut" />
+          <Parameter Name="state" Type="varchar" Mode="InOut" />
+          <Parameter Name="city" Type="varchar" Mode="InOut" />
+          <Parameter Name="password" Type="varchar" Mode="InOut" />
+        </Function>
+        <Function Name="GetHotelDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="hotel_id" Type="varchar" Mode="In" />
+          <Parameter Name="name" Type="varchar" Mode="InOut" />
+          <Parameter Name="hotel_description" Type="varchar(max)" Mode="InOut" />
+          <Parameter Name="pincode" Type="int" Mode="InOut" />
+          <Parameter Name="state" Type="varchar" Mode="InOut" />
+          <Parameter Name="city" Type="varchar" Mode="InOut" />
+          <Parameter Name="manager_id" Type="varchar" Mode="InOut" />
+          <Parameter Name="ac_room" Type="int" Mode="InOut" />
+          <Parameter Name="non_ac_room" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="GetManagerDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="manager_id" Type="varchar" Mode="In" />
+          <Parameter Name="name" Type="varchar" Mode="InOut" />
+          <Parameter Name="password" Type="varchar" Mode="InOut" />
+          <Parameter Name="m_contact" Type="bigint" Mode="InOut" />
+          <Parameter Name="m_email" Type="varchar" Mode="InOut" />
+        </Function>
+        <Function Name="GetManagerHotels" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="manager_id" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetStates" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="hotel_room_avilablity" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="hotel_room_avilablity_CCIO" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="state" Type="varchar" Mode="In" />
+          <Parameter Name="city" Type="varchar" Mode="In" />
+          <Parameter Name="indate" Type="date" Mode="In" />
+          <Parameter Name="outdate" Type="date" Mode="In" />
+        </Function>
+        <Function Name="InBooking" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Booking_id" Type="varchar" Mode="InOut" />
+          <Parameter Name="Customer_id" Type="varchar" Mode="In" />
+          <Parameter Name="Hotel_id" Type="varchar" Mode="In" />
+          <Parameter Name="No_Of_AC_Rooms" Type="int" Mode="In" />
+          <Parameter Name="No_Of_Non_AC_Rooms" Type="int" Mode="In" />
+          <Parameter Name="T_id" Type="varchar" Mode="In" />
+          <Parameter Name="Date_booking" Type="date" Mode="In" />
+          <Parameter Name="Date_checkin" Type="date" Mode="In" />
+          <Parameter Name="Date_checkout" Type="date" Mode="In" />
+          <Parameter Name="no_adult" Type="int" Mode="In" />
+          <Parameter Name="no_child" Type="int" Mode="In" />
+        </Function>
+        <Function Name="InCustomerDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="customer_id" Type="varchar" Mode="InOut" />
+          <Parameter Name="c_name" Type="varchar" Mode="In" />
+          <Parameter Name="c_contact" Type="bigint" Mode="In" />
+          <Parameter Name="c_email" Type="varchar" Mode="In" />
+          <Parameter Name="dob" Type="date" Mode="In" />
+          <Parameter Name="pin" Type="int" Mode="In" />
+          <Parameter Name="state" Type="varchar" Mode="In" />
+          <Parameter Name="city" Type="varchar" Mode="In" />
+          <Parameter Name="password" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="InHotel" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="hotel_id" Type="varchar" Mode="InOut" />
+          <Parameter Name="name" Type="varchar" Mode="In" />
+          <Parameter Name="hotel_description" Type="varchar(max)" Mode="In" />
+          <Parameter Name="pincode" Type="int" Mode="In" />
+          <Parameter Name="state" Type="varchar" Mode="In" />
+          <Parameter Name="city" Type="varchar" Mode="In" />
+          <Parameter Name="manager_id" Type="varchar" Mode="In" />
+          <Parameter Name="ac_room" Type="int" Mode="In" />
+          <Parameter Name="non_ac_room" Type="int" Mode="In" />
+        </Function>
+        <Function Name="InManagerDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="manager_id" Type="varchar" Mode="InOut" />
+          <Parameter Name="m_name" Type="varchar" Mode="In" />
+          <Parameter Name="m_password" Type="varchar" Mode="In" />
+          <Parameter Name="m_contact" Type="bigint" Mode="In" />
+          <Parameter Name="m_email" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="InPin" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="pin" Type="int" Mode="In" />
+          <Parameter Name="state" Type="varchar" Mode="In" />
+          <Parameter Name="city" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="InRoom" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="hotel_id" Type="varchar" Mode="In" />
+          <Parameter Name="room_No" Type="int" Mode="In" />
+          <Parameter Name="room_type" Type="varchar" Mode="In" />
+          <Parameter Name="price_adult" Type="int" Mode="In" />
+          <Parameter Name="price_child" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Price" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="hotel_id" Type="varchar" Mode="In" />
+          <Parameter Name="price_adult_ac_room" Type="int" Mode="InOut" />
+          <Parameter Name="price_child_ac_room" Type="int" Mode="InOut" />
+          <Parameter Name="price_adult_non_ac_room" Type="int" Mode="InOut" />
+          <Parameter Name="price_child_non_ac_room" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="sp_customer_login" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="username" Type="varchar" Mode="In" />
+          <Parameter Name="password" Type="varchar" Mode="In" />
+          <Parameter Name="customerstatus" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="sp_Managers_login" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="username" Type="varchar" Mode="In" />
+          <Parameter Name="password" Type="varchar" Mode="In" />
+          <Parameter Name="Managersstatus" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="sp_payment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Bank_Id" Type="varchar" Mode="In" />
+          <Parameter Name="CreditCardNo" Type="bigint" Mode="In" />
+          <Parameter Name="Cardtype" Type="varchar" Mode="In" />
+          <Parameter Name="NameOnCard" Type="varchar" Mode="In" />
+          <Parameter Name="ExpiryDate" Type="date" Mode="In" />
+          <Parameter Name="CVV" Type="int" Mode="In" />
+          <Parameter Name="AccountNumber" Type="bigint" Mode="In" />
+          <Parameter Name="Pin" Type="int" Mode="In" />
+          <Parameter Name="paystatus" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="sp_store_payment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="payment_id" Type="varchar" Mode="InOut" />
+          <Parameter Name="Hotel_id" Type="varchar" Mode="In" />
+          <Parameter Name="customer_Id" Type="varchar" Mode="In" />
+          <Parameter Name="booking_name" Type="varchar" Mode="In" />
+          <Parameter Name="total_Cost" Type="int" Mode="In" />
+          <Parameter Name="card_number" Type="int" Mode="In" />
+          <Parameter Name="card_type" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UpdateBookingDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Booking_id" Type="varchar" Mode="In" />
+          <Parameter Name="No_Of_Ac_Rooms" Type="int" Mode="In" />
+          <Parameter Name="No_Of_Non_Ac_Rooms" Type="int" Mode="In" />
+          <Parameter Name="Date_Of_ChekInn" Type="date" Mode="In" />
+          <Parameter Name="Date_Of_CheckOut" Type="date" Mode="In" />
+          <Parameter Name="No_Of_Adults" Type="int" Mode="In" />
+          <Parameter Name="No_Of_Children" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UpdateCustomerDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Customer_id" Type="varchar" Mode="In" />
+          <Parameter Name="name" Type="varchar" Mode="In" />
+          <Parameter Name="c_contact" Type="bigint" Mode="In" />
+          <Parameter Name="c_email" Type="varchar" Mode="In" />
+          <Parameter Name="Dob" Type="date" Mode="In" />
+          <Parameter Name="pin" Type="int" Mode="In" />
+          <Parameter Name="state" Type="varchar" Mode="In" />
+          <Parameter Name="city" Type="varchar" Mode="In" />
+          <Parameter Name="password" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="UpdateHotel" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="hotel_id" Type="varchar" Mode="In" />
+          <Parameter Name="name" Type="varchar" Mode="In" />
+          <Parameter Name="hotel_description" Type="varchar(max)" Mode="In" />
+          <Parameter Name="pin" Type="int" Mode="In" />
+          <Parameter Name="state" Type="varchar" Mode="In" />
+          <Parameter Name="city" Type="varchar" Mode="In" />
+          <Parameter Name="manager_id" Type="varchar" Mode="In" />
+          <Parameter Name="ac_room" Type="int" Mode="In" />
+          <Parameter Name="non_ac_room" Type="int" Mode="In" />
+          <Parameter Name="price_adult_ac" Type="int" Mode="In" />
+          <Parameter Name="price_adult_nonac" Type="int" Mode="In" />
+          <Parameter Name="price_child_ac" Type="int" Mode="In" />
+          <Parameter Name="price_child_nonac" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UpdateManagerDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="manager_id" Type="varchar" Mode="In" />
+          <Parameter Name="name" Type="varchar" Mode="In" />
+          <Parameter Name="password" Type="varchar" Mode="In" />
+          <Parameter Name="m_contact" Type="bigint" Mode="In" />
+          <Parameter Name="m_email" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="Hotel_Reservation_SystemModelStoreContainer">
+          <EntitySet Name="Bank_details" EntityType="Self.Bank_details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Booking" EntityType="Self.Booking" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Card_details" EntityType="Self.Card_details" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Hotels" EntityType="Self.Hotels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Managers" EntityType="Self.Managers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PinCodes" EntityType="Self.PinCodes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Rooms" EntityType="Self.Rooms" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_card_bank_id" Association="Self.fk_card_bank_id">
+            <End Role="Bank_details" EntitySet="Bank_details" />
+            <End Role="Card_details" EntitySet="Card_details" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Customer_id" Association="Self.Fk_Customer_id">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Booking" EntitySet="Booking" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Hotel_id" Association="Self.Fk_Hotel_id">
+            <End Role="Hotels" EntitySet="Hotels" />
+            <End Role="Booking" EntitySet="Booking" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hotels_Managers" Association="Self.FK_Hotels_Managers">
+            <End Role="Managers" EntitySet="Managers" />
+            <End Role="Hotels" EntitySet="Hotels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hotels_PinCodes_id" Association="Self.FK_Hotels_PinCodes_id">
+            <End Role="PinCodes" EntitySet="PinCodes" />
+            <End Role="Hotels" EntitySet="Hotels" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Payment_Card_details" Association="Self.fk_Payment_Card_details">
+            <End Role="Card_details" EntitySet="Card_details" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Payment_Hotels_id" Association="Self.fk_Payment_Hotels_id">
+            <End Role="Hotels" EntitySet="Hotels" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="fk_pinCode_cust" Association="Self.fk_pinCode_cust">
+            <End Role="PinCodes" EntitySet="PinCodes" />
+            <End Role="Customers" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Rooms_Hotel_Id" Association="Self.Fk_Rooms_Hotel_Id">
+            <End Role="Hotels" EntitySet="Hotels" />
+            <End Role="Rooms" EntitySet="Rooms" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_T_id" Association="Self.Fk_T_id">
+            <End Role="Payment" EntitySet="Payment" />
+            <End Role="Booking" EntitySet="Booking" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Hotel_Reservation_SystemModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Bank_details">
+          <Key>
+            <PropertyRef Name="Bank_id" />
+          </Key>
+          <Property Name="Bank_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Card_details" Relationship="Self.fk_card_bank_id" FromRole="Bank_details" ToRole="Card_details" />
+        </EntityType>
+        <EntityType Name="Booking">
+          <Key>
+            <PropertyRef Name="Booking_id" />
+          </Key>
+          <Property Name="Booking_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Customer_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Hotel_id" Type="String" MaxLength="7" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="No_Of_AC_Rooms" Type="Int32" />
+          <Property Name="No_Of_Non_AC_Rooms" Type="Int32" Nullable="false" />
+          <Property Name="T_id" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Date_booking" Type="DateTime" Precision="0" />
+          <Property Name="Date_checkin" Type="DateTime" Precision="0" />
+          <Property Name="Date_checkout" Type="DateTime" Precision="0" />
+          <Property Name="no_adult" Type="Int32" Nullable="false" />
+          <Property Name="no_child" Type="Int32" />
+          <Property Name="no_nights" Type="Int32" />
+          <NavigationProperty Name="Customer" Relationship="Self.Fk_Customer_id" FromRole="Booking" ToRole="Customers" />
+          <NavigationProperty Name="Hotel" Relationship="Self.Fk_Hotel_id" FromRole="Booking" ToRole="Hotels" />
+          <NavigationProperty Name="Payment" Relationship="Self.Fk_T_id" FromRole="Booking" ToRole="Payment" />
+        </EntityType>
+        <EntityType Name="Card_details">
+          <Key>
+            <PropertyRef Name="card_no" />
+          </Key>
+          <Property Name="card_no" Type="Int32" Nullable="false" />
+          <Property Name="name_on_card" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="cvc_no" Type="Int32" Nullable="false" />
+          <Property Name="pin" Type="Int32" Nullable="false" />
+          <Property Name="account_no" Type="Int32" Nullable="false" />
+          <Property Name="exp_date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Bank_id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="card_type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Bank_details" Relationship="Self.fk_card_bank_id" FromRole="Card_details" ToRole="Bank_details" />
+          <NavigationProperty Name="Payments" Relationship="Self.fk_Payment_Card_details" FromRole="Card_details" ToRole="Payment" />
+        </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="c_contact" Type="Int64" Nullable="false" />
+          <Property Name="c_email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Dob" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="pincode" Type="Int32" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Bookings" Relationship="Self.Fk_Customer_id" FromRole="Customers" ToRole="Booking" />
+          <NavigationProperty Name="PinCode1" Relationship="Self.fk_pinCode_cust" FromRole="Customers" ToRole="PinCodes" />
+        </EntityType>
+        <EntityType Name="Hotel">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" MaxLength="7" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="hotel_description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pincode" Type="Int32" Nullable="false" />
+          <Property Name="manager_id" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="no_of_ac_rooms" Type="Int32" />
+          <Property Name="no_of_non_ac_rooms" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Bookings" Relationship="Self.Fk_Hotel_id" FromRole="Hotels" ToRole="Booking" />
+          <NavigationProperty Name="Manager" Relationship="Self.FK_Hotels_Managers" FromRole="Hotels" ToRole="Managers" />
+          <NavigationProperty Name="PinCode1" Relationship="Self.FK_Hotels_PinCodes_id" FromRole="Hotels" ToRole="PinCodes" />
+          <NavigationProperty Name="Payments" Relationship="Self.fk_Payment_Hotels_id" FromRole="Hotels" ToRole="Payment" />
+          <NavigationProperty Name="Rooms" Relationship="Self.Fk_Rooms_Hotel_Id" FromRole="Hotels" ToRole="Rooms" />
+        </EntityType>
+        <EntityType Name="Manager">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="m_contact" Type="Int64" Nullable="false" />
+          <Property Name="m_email" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Hotels" Relationship="Self.FK_Hotels_Managers" FromRole="Managers" ToRole="Hotels" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Hotel_id" Type="String" MaxLength="7" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="customer_Id" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="booking_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="total_Cost" Type="Int32" Nullable="false" />
+          <Property Name="card_number" Type="Int32" Nullable="false" />
+          <Property Name="card_type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Bookings" Relationship="Self.Fk_T_id" FromRole="Payment" ToRole="Booking" />
+          <NavigationProperty Name="Card_details" Relationship="Self.fk_Payment_Card_details" FromRole="Payment" ToRole="Card_details" />
+          <NavigationProperty Name="Hotel" Relationship="Self.fk_Payment_Hotels_id" FromRole="Payment" ToRole="Hotels" />
+        </EntityType>
+        <EntityType Name="PinCode">
+          <Key>
+            <PropertyRef Name="pin" />
+          </Key>
+          <Property Name="pin" Type="Int32" Nullable="false" />
+          <Property Name="state" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="city" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Customers" Relationship="Self.fk_pinCode_cust" FromRole="PinCodes" ToRole="Customers" />
+          <NavigationProperty Name="Hotels" Relationship="Self.FK_Hotels_PinCodes_id" FromRole="PinCodes" ToRole="Hotels" />
+        </EntityType>
+        <EntityType Name="Room">
+          <Key>
+            <PropertyRef Name="hotel_id" />
+            <PropertyRef Name="room_No" />
+          </Key>
+          <Property Name="hotel_id" Type="String" MaxLength="7" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="room_No" Type="Int32" Nullable="false" />
+          <Property Name="room_type" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="price_adult" Type="Int32" Nullable="false" />
+          <Property Name="price_child" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Hotel" Relationship="Self.Fk_Rooms_Hotel_Id" FromRole="Rooms" ToRole="Hotels" />
+        </EntityType>
+        <Association Name="fk_card_bank_id">
+          <End Role="Bank_details" Type="Self.Bank_details" Multiplicity="1" />
+          <End Role="Card_details" Type="Self.Card_details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bank_details">
+              <PropertyRef Name="Bank_id" />
+            </Principal>
+            <Dependent Role="Card_details">
+              <PropertyRef Name="Bank_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Customer_id">
+          <End Role="Customers" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="Customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Hotel_id">
+          <End Role="Hotels" Type="Self.Hotel" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hotels">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="Hotel_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_T_id">
+          <End Role="Payment" Type="Self.Payment" Multiplicity="1" />
+          <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Payment">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="T_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Payment_Card_details">
+          <End Role="Card_details" Type="Self.Card_details" Multiplicity="1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Card_details">
+              <PropertyRef Name="card_no" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="card_number" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_pinCode_cust">
+          <End Role="PinCodes" Type="Self.PinCode" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Customers" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PinCodes">
+              <PropertyRef Name="pin" />
+            </Principal>
+            <Dependent Role="Customers">
+              <PropertyRef Name="pincode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hotels_Managers">
+          <End Role="Managers" Type="Self.Manager" Multiplicity="1" />
+          <End Role="Hotels" Type="Self.Hotel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Managers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Hotels">
+              <PropertyRef Name="manager_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hotels_PinCodes_id">
+          <End Role="PinCodes" Type="Self.PinCode" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Hotels" Type="Self.Hotel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PinCodes">
+              <PropertyRef Name="pin" />
+            </Principal>
+            <Dependent Role="Hotels">
+              <PropertyRef Name="pincode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Payment_Hotels_id">
+          <End Role="Hotels" Type="Self.Hotel" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hotels">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="Hotel_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_Rooms_Hotel_Id">
+          <End Role="Hotels" Type="Self.Hotel" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Rooms" Type="Self.Room" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hotels">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Rooms">
+              <PropertyRef Name="hotel_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Hotel_Reservation_SystemEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Bank_details" EntityType="Self.Bank_details" />
+          <EntitySet Name="Bookings" EntityType="Self.Booking" />
+          <EntitySet Name="Card_details" EntityType="Self.Card_details" />
+          <EntitySet Name="Customers" EntityType="Self.Customer" />
+          <EntitySet Name="Hotels" EntityType="Self.Hotel" />
+          <EntitySet Name="Managers" EntityType="Self.Manager" />
+          <EntitySet Name="Payments" EntityType="Self.Payment" />
+          <EntitySet Name="PinCodes" EntityType="Self.PinCode" />
+          <EntitySet Name="Rooms" EntityType="Self.Room" />
+          <AssociationSet Name="fk_card_bank_id" Association="Self.fk_card_bank_id">
+            <End Role="Bank_details" EntitySet="Bank_details" />
+            <End Role="Card_details" EntitySet="Card_details" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Customer_id" Association="Self.Fk_Customer_id">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Booking" EntitySet="Bookings" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Hotel_id" Association="Self.Fk_Hotel_id">
+            <End Role="Hotels" EntitySet="Hotels" />
+            <End Role="Booking" EntitySet="Bookings" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_T_id" Association="Self.Fk_T_id">
+            <End Role="Payment" EntitySet="Payments" />
+            <End Role="Booking" EntitySet="Bookings" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Payment_Card_details" Association="Self.fk_Payment_Card_details">
+            <End Role="Card_details" EntitySet="Card_details" />
+            <End Role="Payment" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="fk_pinCode_cust" Association="Self.fk_pinCode_cust">
+            <End Role="PinCodes" EntitySet="PinCodes" />
+            <End Role="Customers" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hotels_Managers" Association="Self.FK_Hotels_Managers">
+            <End Role="Managers" EntitySet="Managers" />
+            <End Role="Hotels" EntitySet="Hotels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hotels_PinCodes_id" Association="Self.FK_Hotels_PinCodes_id">
+            <End Role="PinCodes" EntitySet="PinCodes" />
+            <End Role="Hotels" EntitySet="Hotels" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Payment_Hotels_id" Association="Self.fk_Payment_Hotels_id">
+            <End Role="Hotels" EntitySet="Hotels" />
+            <End Role="Payment" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_Rooms_Hotel_Id" Association="Self.Fk_Rooms_Hotel_Id">
+            <End Role="Hotels" EntitySet="Hotels" />
+            <End Role="Rooms" EntitySet="Rooms" />
+          </AssociationSet>
+          <FunctionImport Name="Delete_booking">
+            <Parameter Name="Booking_id" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Delete_customer">
+            <Parameter Name="Customer_id" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Delete_hotel">
+            <Parameter Name="Hotel_id" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Delete_manager">
+            <Parameter Name="Manager_id" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Delete_payment">
+            <Parameter Name="Payment_id" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetBookingDetails">
+            <Parameter Name="Booking_id" Mode="In" Type="String" />
+            <Parameter Name="Hotel_id" Mode="InOut" Type="String" />
+            <Parameter Name="Booking_Date" Mode="InOut" Type="DateTime" />
+            <Parameter Name="Arrival_Date" Mode="InOut" Type="DateTime" />
+            <Parameter Name="Departure_Date" Mode="InOut" Type="DateTime" />
+            <Parameter Name="Number_of_Adults" Mode="InOut" Type="Int32" />
+            <Parameter Name="Number_of_Children" Mode="InOut" Type="Int32" />
+            <Parameter Name="Number_of_Nights" Mode="InOut" Type="Int32" />
+            <Parameter Name="Number_of_AC_Rooms" Mode="InOut" Type="Int32" />
+            <Parameter Name="Number_of_Non_AC_Rooms" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetCities" ReturnType="Collection(String)" />
+          <FunctionImport Name="GetCitiesStates" ReturnType="Collection(Hotel_Reservation_SystemModel.GetCitiesStates_Result)" />
+          <FunctionImport Name="GetCustomerDetails">
+            <Parameter Name="customer_id" Mode="In" Type="String" />
+            <Parameter Name="name" Mode="InOut" Type="String" />
+            <Parameter Name="c_contact" Mode="InOut" Type="Int64" />
+            <Parameter Name="c_email" Mode="InOut" Type="String" />
+            <Parameter Name="dob" Mode="InOut" Type="DateTime" />
+            <Parameter Name="pincode" Mode="InOut" Type="Int32" />
+            <Parameter Name="state" Mode="InOut" Type="String" />
+            <Parameter Name="city" Mode="InOut" Type="String" />
+            <Parameter Name="password" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetHotelDetails">
+            <Parameter Name="hotel_id" Mode="In" Type="String" />
+            <Parameter Name="name" Mode="InOut" Type="String" />
+            <Parameter Name="hotel_description" Mode="InOut" Type="String" />
+            <Parameter Name="pincode" Mode="InOut" Type="Int32" />
+            <Parameter Name="state" Mode="InOut" Type="String" />
+            <Parameter Name="city" Mode="InOut" Type="String" />
+            <Parameter Name="manager_id" Mode="InOut" Type="String" />
+            <Parameter Name="ac_room" Mode="InOut" Type="Int32" />
+            <Parameter Name="non_ac_room" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetManagerDetails">
+            <Parameter Name="manager_id" Mode="In" Type="String" />
+            <Parameter Name="name" Mode="InOut" Type="String" />
+            <Parameter Name="password" Mode="InOut" Type="String" />
+            <Parameter Name="m_contact" Mode="InOut" Type="Int64" />
+            <Parameter Name="m_email" Mode="InOut" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetManagerHotels" ReturnType="Collection(Hotel_Reservation_SystemModel.GetManagerHotels_Result)">
+            <Parameter Name="manager_id" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetStates" ReturnType="Collection(String)" />
+          <FunctionImport Name="hotel_room_avilablity" ReturnType="Collection(Hotel_Reservation_SystemModel.hotel_room_avilablity_Result)" />
+          <FunctionImport Name="hotel_room_avilablity_CCIO" ReturnType="Collection(Hotel_Reservation_SystemModel.hotel_room_avilablity_CCIO_Result)">
+            <Parameter Name="state" Mode="In" Type="String" />
+            <Parameter Name="city" Mode="In" Type="String" />
+            <Parameter Name="indate" Mode="In" Type="DateTime" />
+            <Parameter Name="outdate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="InBooking">
+            <Parameter Name="Booking_id" Mode="InOut" Type="String" />
+            <Parameter Name="Customer_id" Mode="In" Type="String" />
+            <Parameter Name="Hotel_id" Mode="In" Type="String" />
+            <Parameter Name="No_Of_AC_Rooms" Mode="In" Type="Int32" />
+            <Parameter Name="No_Of_Non_AC_Rooms" Mode="In" Type="Int32" />
+            <Parameter Name="T_id" Mode="In" Type="String" />
+            <Parameter Name="Date_booking" Mode="In" Type="DateTime" />
+            <Parameter Name="Date_checkin" Mode="In" Type="DateTime" />
+            <Parameter Name="Date_checkout" Mode="In" Type="DateTime" />
+            <Parameter Name="no_adult" Mode="In" Type="Int32" />
+            <Parameter Name="no_child" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="InCustomerDetails">
+            <Parameter Name="customer_id" Mode="InOut" Type="String" />
+            <Parameter Name="c_name" Mode="In" Type="String" />
+            <Parameter Name="c_contact" Mode="In" Type="Int64" />
+            <Parameter Name="c_email" Mode="In" Type="String" />
+            <Parameter Name="dob" Mode="In" Type="DateTime" />
+            <Parameter Name="pin" Mode="In" Type="Int32" />
+            <Parameter Name="state" Mode="In" Type="String" />
+            <Parameter Name="city" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="InHotel">
+            <Parameter Name="hotel_id" Mode="InOut" Type="String" />
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="hotel_description" Mode="In" Type="String" />
+            <Parameter Name="pincode" Mode="In" Type="Int32" />
+            <Parameter Name="state" Mode="In" Type="String" />
+            <Parameter Name="city" Mode="In" Type="String" />
+            <Parameter Name="manager_id" Mode="In" Type="String" />
+            <Parameter Name="ac_room" Mode="In" Type="Int32" />
+            <Parameter Name="non_ac_room" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="InManagerDetails">
+            <Parameter Name="manager_id" Mode="InOut" Type="String" />
+            <Parameter Name="m_name" Mode="In" Type="String" />
+            <Parameter Name="m_password" Mode="In" Type="String" />
+            <Parameter Name="m_contact" Mode="In" Type="Int64" />
+            <Parameter Name="m_email" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="InPin">
+            <Parameter Name="pin" Mode="In" Type="Int32" />
+            <Parameter Name="state" Mode="In" Type="String" />
+            <Parameter Name="city" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="InRoom">
+            <Parameter Name="hotel_id" Mode="In" Type="String" />
+            <Parameter Name="room_No" Mode="In" Type="Int32" />
+            <Parameter Name="room_type" Mode="In" Type="String" />
+            <Parameter Name="price_adult" Mode="In" Type="Int32" />
+            <Parameter Name="price_child" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="Price">
+            <Parameter Name="hotel_id" Mode="In" Type="String" />
+            <Parameter Name="price_adult_ac_room" Mode="InOut" Type="Int32" />
+            <Parameter Name="price_child_ac_room" Mode="InOut" Type="Int32" />
+            <Parameter Name="price_adult_non_ac_room" Mode="InOut" Type="Int32" />
+            <Parameter Name="price_child_non_ac_room" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_customer_login">
+            <Parameter Name="username" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+            <Parameter Name="customerstatus" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_Managers_login">
+            <Parameter Name="username" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+            <Parameter Name="Managersstatus" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_payment">
+            <Parameter Name="Bank_Id" Mode="In" Type="String" />
+            <Parameter Name="CreditCardNo" Mode="In" Type="Int64" />
+            <Parameter Name="Cardtype" Mode="In" Type="String" />
+            <Parameter Name="NameOnCard" Mode="In" Type="String" />
+            <Parameter Name="ExpiryDate" Mode="In" Type="DateTime" />
+            <Parameter Name="CVV" Mode="In" Type="Int32" />
+            <Parameter Name="AccountNumber" Mode="In" Type="Int64" />
+            <Parameter Name="Pin" Mode="In" Type="Int32" />
+            <Parameter Name="paystatus" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="sp_store_payment">
+            <Parameter Name="payment_id" Mode="InOut" Type="String" />
+            <Parameter Name="Hotel_id" Mode="In" Type="String" />
+            <Parameter Name="customer_Id" Mode="In" Type="String" />
+            <Parameter Name="booking_name" Mode="In" Type="String" />
+            <Parameter Name="total_Cost" Mode="In" Type="Int32" />
+            <Parameter Name="card_number" Mode="In" Type="Int32" />
+            <Parameter Name="card_type" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateBookingDetails">
+            <Parameter Name="Booking_id" Mode="In" Type="String" />
+            <Parameter Name="No_Of_Ac_Rooms" Mode="In" Type="Int32" />
+            <Parameter Name="No_Of_Non_Ac_Rooms" Mode="In" Type="Int32" />
+            <Parameter Name="Date_Of_ChekInn" Mode="In" Type="DateTime" />
+            <Parameter Name="Date_Of_CheckOut" Mode="In" Type="DateTime" />
+            <Parameter Name="No_Of_Adults" Mode="In" Type="Int32" />
+            <Parameter Name="No_Of_Children" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateCustomerDetails">
+            <Parameter Name="Customer_id" Mode="In" Type="String" />
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="c_contact" Mode="In" Type="Int64" />
+            <Parameter Name="c_email" Mode="In" Type="String" />
+            <Parameter Name="Dob" Mode="In" Type="DateTime" />
+            <Parameter Name="pin" Mode="In" Type="Int32" />
+            <Parameter Name="state" Mode="In" Type="String" />
+            <Parameter Name="city" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateHotel">
+            <Parameter Name="hotel_id" Mode="In" Type="String" />
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="hotel_description" Mode="In" Type="String" />
+            <Parameter Name="pin" Mode="In" Type="Int32" />
+            <Parameter Name="state" Mode="In" Type="String" />
+            <Parameter Name="city" Mode="In" Type="String" />
+            <Parameter Name="manager_id" Mode="In" Type="String" />
+            <Parameter Name="ac_room" Mode="In" Type="Int32" />
+            <Parameter Name="non_ac_room" Mode="In" Type="Int32" />
+            <Parameter Name="price_adult_ac" Mode="In" Type="Int32" />
+            <Parameter Name="price_adult_nonac" Mode="In" Type="Int32" />
+            <Parameter Name="price_child_ac" Mode="In" Type="Int32" />
+            <Parameter Name="price_child_nonac" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateManagerDetails">
+            <Parameter Name="manager_id" Mode="In" Type="String" />
+            <Parameter Name="name" Mode="In" Type="String" />
+            <Parameter Name="password" Mode="In" Type="String" />
+            <Parameter Name="m_contact" Mode="In" Type="Int64" />
+            <Parameter Name="m_email" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="GetCitiesStates_Result">
+          <Property Type="String" Name="city" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="state" Nullable="false" MaxLength="20" />
+        </ComplexType>
+        <ComplexType Name="GetManagerHotels_Result">
+          <Property Type="String" Name="id" Nullable="false" MaxLength="7" />
+          <Property Type="String" Name="name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="hotel_description" Nullable="false" />
+          <Property Type="Int32" Name="no_of_ac_rooms" Nullable="true" />
+          <Property Type="Int32" Name="no_of_non_ac_rooms" Nullable="false" />
+          <Property Type="Int32" Name="pincode" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="hotel_room_avilablity_Result">
+          <Property Type="String" Name="id" Nullable="false" MaxLength="7" />
+          <Property Type="String" Name="name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="state" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="city" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="avilabe_ac_rooms" Nullable="true" />
+          <Property Type="Int32" Name="avilabe_non_ac_rooms" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="hotel_room_avilablity_CCIO_Result">
+          <Property Type="String" Name="id" Nullable="false" MaxLength="7" />
+          <Property Type="String" Name="name" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="state" Nullable="false" MaxLength="20" />
+          <Property Type="String" Name="city" Nullable="false" MaxLength="20" />
+          <Property Type="Int32" Name="avilabe_ac_rooms" Nullable="true" />
+          <Property Type="Int32" Name="avilabe_non_ac_rooms" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Hotel_Reservation_SystemModelStoreContainer" CdmEntityContainer="Hotel_Reservation_SystemEntities">
+          <EntitySetMapping Name="Bank_details">
+            <EntityTypeMapping TypeName="Hotel_Reservation_SystemModel.Bank_details">
+              <MappingFragment StoreEntitySet="Bank_details">
+                <ScalarProperty Name="Bank_id" ColumnName="Bank_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bookings">
+            <EntityTypeMapping TypeName="Hotel_Reservation_SystemModel.Booking">
+              <MappingFragment StoreEntitySet="Booking">
+                <ScalarProperty Name="Booking_id" ColumnName="Booking_id" />
+                <ScalarProperty Name="Customer_id" ColumnName="Customer_id" />
+                <ScalarProperty Name="Hotel_id" ColumnName="Hotel_id" />
+                <ScalarProperty Name="No_Of_AC_Rooms" ColumnName="No_Of_AC_Rooms" />
+                <ScalarProperty Name="No_Of_Non_AC_Rooms" ColumnName="No_Of_Non_AC_Rooms" />
+                <ScalarProperty Name="T_id" ColumnName="T_id" />
+                <ScalarProperty Name="Date_booking" ColumnName="Date_booking" />
+                <ScalarProperty Name="Date_checkin" ColumnName="Date_checkin" />
+                <ScalarProperty Name="Date_checkout" ColumnName="Date_checkout" />
+                <ScalarProperty Name="no_adult" ColumnName="no_adult" />
+                <ScalarProperty Name="no_child" ColumnName="no_child" />
+                <ScalarProperty Name="no_nights" ColumnName="no_nights" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Card_details">
+            <EntityTypeMapping TypeName="Hotel_Reservation_SystemModel.Card_details">
+              <MappingFragment StoreEntitySet="Card_details">
+                <ScalarProperty Name="card_no" ColumnName="card_no" />
+                <ScalarProperty Name="name_on_card" ColumnName="name_on_card" />
+                <ScalarProperty Name="cvc_no" ColumnName="cvc_no" />
+                <ScalarProperty Name="pin" ColumnName="pin" />
+                <ScalarProperty Name="account_no" ColumnName="account_no" />
+                <ScalarProperty Name="exp_date" ColumnName="exp_date" />
+                <ScalarProperty Name="Bank_id" ColumnName="Bank_id" />
+                <ScalarProperty Name="card_type" ColumnName="card_type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="Hotel_Reservation_SystemModel.Customer">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="c_contact" ColumnName="c_contact" />
+                <ScalarProperty Name="c_email" ColumnName="c_email" />
+                <ScalarProperty Name="Dob" ColumnName="Dob" />
+                <ScalarProperty Name="pincode" ColumnName="pincode" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hotels">
+            <EntityTypeMapping TypeName="Hotel_Reservation_SystemModel.Hotel">
+              <MappingFragment StoreEntitySet="Hotels">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="hotel_description" ColumnName="hotel_description" />
+                <ScalarProperty Name="pincode" ColumnName="pincode" />
+                <ScalarProperty Name="manager_id" ColumnName="manager_id" />
+                <ScalarProperty Name="no_of_ac_rooms" ColumnName="no_of_ac_rooms" />
+                <ScalarProperty Name="no_of_non_ac_rooms" ColumnName="no_of_non_ac_rooms" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Managers">
+            <EntityTypeMapping TypeName="Hotel_Reservation_SystemModel.Manager">
+              <MappingFragment StoreEntitySet="Managers">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="m_contact" ColumnName="m_contact" />
+                <ScalarProperty Name="m_email" ColumnName="m_email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payments">
+            <EntityTypeMapping TypeName="Hotel_Reservation_SystemModel.Payment">
+              <MappingFragment StoreEntitySet="Payment">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Hotel_id" ColumnName="Hotel_id" />
+                <ScalarProperty Name="customer_Id" ColumnName="customer_Id" />
+                <ScalarProperty Name="booking_name" ColumnName="booking_name" />
+                <ScalarProperty Name="total_Cost" ColumnName="total_Cost" />
+                <ScalarProperty Name="card_number" ColumnName="card_number" />
+                <ScalarProperty Name="card_type" ColumnName="card_type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PinCodes">
+            <EntityTypeMapping TypeName="Hotel_Reservation_SystemModel.PinCode">
+              <MappingFragment StoreEntitySet="PinCodes">
+                <ScalarProperty Name="pin" ColumnName="pin" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="city" ColumnName="city" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Rooms">
+            <EntityTypeMapping TypeName="Hotel_Reservation_SystemModel.Room">
+              <MappingFragment StoreEntitySet="Rooms">
+                <ScalarProperty Name="hotel_id" ColumnName="hotel_id" />
+                <ScalarProperty Name="room_No" ColumnName="room_No" />
+                <ScalarProperty Name="room_type" ColumnName="room_type" />
+                <ScalarProperty Name="price_adult" ColumnName="price_adult" />
+                <ScalarProperty Name="price_child" ColumnName="price_child" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Delete_booking" FunctionName="Hotel_Reservation_SystemModel.Store.Delete_booking" />
+          <FunctionImportMapping FunctionImportName="Delete_customer" FunctionName="Hotel_Reservation_SystemModel.Store.Delete_customer" />
+          <FunctionImportMapping FunctionImportName="Delete_hotel" FunctionName="Hotel_Reservation_SystemModel.Store.Delete_hotel" />
+          <FunctionImportMapping FunctionImportName="Delete_manager" FunctionName="Hotel_Reservation_SystemModel.Store.Delete_manager" />
+          <FunctionImportMapping FunctionImportName="Delete_payment" FunctionName="Hotel_Reservation_SystemModel.Store.Delete_payment" />
+          <FunctionImportMapping FunctionImportName="GetBookingDetails" FunctionName="Hotel_Reservation_SystemModel.Store.GetBookingDetails" />
+          <FunctionImportMapping FunctionImportName="GetCities" FunctionName="Hotel_Reservation_SystemModel.Store.GetCities" />
+          <FunctionImportMapping FunctionImportName="GetCitiesStates" FunctionName="Hotel_Reservation_SystemModel.Store.GetCitiesStates">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Hotel_Reservation_SystemModel.GetCitiesStates_Result">
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="state" ColumnName="state" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetCustomerDetails" FunctionName="Hotel_Reservation_SystemModel.Store.GetCustomerDetails" />
+          <FunctionImportMapping FunctionImportName="GetHotelDetails" FunctionName="Hotel_Reservation_SystemModel.Store.GetHotelDetails" />
+          <FunctionImportMapping FunctionImportName="GetManagerDetails" FunctionName="Hotel_Reservation_SystemModel.Store.GetManagerDetails" />
+          <FunctionImportMapping FunctionImportName="GetManagerHotels" FunctionName="Hotel_Reservation_SystemModel.Store.GetManagerHotels">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Hotel_Reservation_SystemModel.GetManagerHotels_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="hotel_description" ColumnName="hotel_description" />
+                <ScalarProperty Name="no_of_ac_rooms" ColumnName="no_of_ac_rooms" />
+                <ScalarProperty Name="no_of_non_ac_rooms" ColumnName="no_of_non_ac_rooms" />
+                <ScalarProperty Name="pincode" ColumnName="pincode" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetStates" FunctionName="Hotel_Reservation_SystemModel.Store.GetStates" />
+          <FunctionImportMapping FunctionImportName="hotel_room_avilablity" FunctionName="Hotel_Reservation_SystemModel.Store.hotel_room_avilablity">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Hotel_Reservation_SystemModel.hotel_room_avilablity_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="avilabe_ac_rooms" ColumnName="avilabe_ac_rooms" />
+                <ScalarProperty Name="avilabe_non_ac_rooms" ColumnName="avilabe_non_ac_rooms" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="hotel_room_avilablity_CCIO" FunctionName="Hotel_Reservation_SystemModel.Store.hotel_room_avilablity_CCIO">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Hotel_Reservation_SystemModel.hotel_room_avilablity_CCIO_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="city" ColumnName="city" />
+                <ScalarProperty Name="avilabe_ac_rooms" ColumnName="avilabe_ac_rooms" />
+                <ScalarProperty Name="avilabe_non_ac_rooms" ColumnName="avilabe_non_ac_rooms" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="InBooking" FunctionName="Hotel_Reservation_SystemModel.Store.InBooking" />
+          <FunctionImportMapping FunctionImportName="InCustomerDetails" FunctionName="Hotel_Reservation_SystemModel.Store.InCustomerDetails" />
+          <FunctionImportMapping FunctionImportName="InHotel" FunctionName="Hotel_Reservation_SystemModel.Store.InHotel" />
+          <FunctionImportMapping FunctionImportName="InManagerDetails" FunctionName="Hotel_Reservation_SystemModel.Store.InManagerDetails" />
+          <FunctionImportMapping FunctionImportName="InPin" FunctionName="Hotel_Reservation_SystemModel.Store.InPin" />
+          <FunctionImportMapping FunctionImportName="InRoom" FunctionName="Hotel_Reservation_SystemModel.Store.InRoom" />
+          <FunctionImportMapping FunctionImportName="Price" FunctionName="Hotel_Reservation_SystemModel.Store.Price" />
+          <FunctionImportMapping FunctionImportName="sp_customer_login" FunctionName="Hotel_Reservation_SystemModel.Store.sp_customer_login" />
+          <FunctionImportMapping FunctionImportName="sp_Managers_login" FunctionName="Hotel_Reservation_SystemModel.Store.sp_Managers_login" />
+          <FunctionImportMapping FunctionImportName="sp_payment" FunctionName="Hotel_Reservation_SystemModel.Store.sp_payment" />
+          <FunctionImportMapping FunctionImportName="sp_store_payment" FunctionName="Hotel_Reservation_SystemModel.Store.sp_store_payment" />
+          <FunctionImportMapping FunctionImportName="UpdateBookingDetails" FunctionName="Hotel_Reservation_SystemModel.Store.UpdateBookingDetails" />
+          <FunctionImportMapping FunctionImportName="UpdateCustomerDetails" FunctionName="Hotel_Reservation_SystemModel.Store.UpdateCustomerDetails" />
+          <FunctionImportMapping FunctionImportName="UpdateHotel" FunctionName="Hotel_Reservation_SystemModel.Store.UpdateHotel" />
+          <FunctionImportMapping FunctionImportName="UpdateManagerDetails" FunctionName="Hotel_Reservation_SystemModel.Store.UpdateManagerDetails" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

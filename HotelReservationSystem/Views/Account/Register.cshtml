@@ -1,0 +1,116 @@
+﻿@model HotelReservationSystem.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<div class="panel-body">
+    <h3>Your are :</h3>
+        <br />
+    @Html.ActionLink("Customer", "Register", "Register", new { area = "Customers" }, new { @class = "btn btn-danger" })
+    @Html.ActionLink("Manager", "Register", "Register", new { area = "Managers" }, new { @class = "btn btn-primary" })
+    @*<button id="customer" class="btn btn-danger">Customer</button>
+    <button id="manager" class="btn btn-danger ">Manager</button>*@
+    <br />
+</div>
+
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div id="myModalContent" class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Modal Header</h4>
+            </div>
+            <div class="modal-body">
+                <p>Some text in the modal.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+@section Scripts {
+@Scripts.Render("~/bundles/jqueryval")
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+
+<script >
+    $(document).ready(function () {
+        
+        
+
+
+        $("#manager").click(function () {
+            $("#customer").attr("class", "btn btn-danger");
+            $("#manager").removeAttr("class");
+            $("#manager").attr("class", "btn btn-success");
+
+            $.ajax({
+                type: 'Get',
+                url: '/Managers/Register/Register',
+                success: function (response) {
+
+                    alert(response);
+                    $("#myModalContent").html(response);
+                    
+                    
+                    $("#myModal").modal("show");
+
+                    },
+
+                   
+                Error: function (xhr, ajaxOptions, thrownError) { alert(xhr.responseText); }
+
+            })
+            
+
+        })
+
+
+        $("#customer").click(function () {
+            $("#manager").attr("class", "btn btn-danger");
+            $("#customer").removeAttr("class");
+            $("#customer").attr("class", "btn btn-success");
+
+            $.ajax({
+                type: 'GET',
+                url: '/Customers/Register/Register',
+                success: function (response) {
+
+                    $("#myModalContent").html(response);
+                   
+                    $("#myModal").modal('show');
+
+
+                },
+
+
+                Error: function (xhr, ajaxOptions, thrownError) { alert(xhr.responseText); }
+
+            })
+
+            
+        })
+        
+
+    });
+
+</script>
+
+
+
+
+}
+
+
+
+
+

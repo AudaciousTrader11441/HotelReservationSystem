@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "Book Hotels";
+    IPagedList<HotelReservationSystem.Areas.Customers.Models.AvilableHotel> Avilable = ViewBag.Hotels;
+    IEnumerable<SelectListItem> States = ViewBag.States;
+   
+    IEnumerable<SelectListItem> Cities = ViewBag.City;
+
+}
+
+<div class="panel-default col-md-10">
+    <div class="panel-heading ">
+        <h3>Filters </h3>
+            
+
+        <label class="control-label" >States:</label>@Html.DropDownList("States", States, new { @class = "form-control "  })
+        <label class="control-label">City:</label>@Html.DropDownList("Cities", Cities,new { hidden = "hidden", @class = "form-control " })
+
+        <input id="btnReset" type="button" class="btn btn-danger" value="Reset" />
+       
+        
+    </div>
+    <div class="panel-body">
+        <div id="Listingtable" class="main-content">
+
+        
+            @Html.Partial("_HotelDetails",Avilable)
+
+        </div>
+        <label id="test"></label>
+    </div>
+</div>
+
+
+@*<div id="myModal" class="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="myModalContent"> hellow</div>
+        </div>
+    </div>
+
+</div>*@
+
+
+@*<script src="~/Scripts/jquery-1.10.2.min.js"></script>*@
+
+@*<input id="btnTest" type="button" value="button" />
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#btnTest').click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "/Home/Test",
+                    data: { ListID: '1', ItemName: 'test' },
+                    dataType: "json",
+                    success: function (response) { alert(response); },
+                    error: function (xhr, ajaxOptions, thrownError) { alert(xhr.responseText); }
+                });
+            });
+        });
+    </script>*@
+
+
+
+

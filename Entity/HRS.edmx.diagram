@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a912a06cf6c843369ed911df2d2f5345" Name="Diagram1">
+        <EntityTypeShape EntityType="Hotel_Reservation_SystemModel.Bank_details" Width="1.5" PointX="10.125" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Hotel_Reservation_SystemModel.Booking" Width="1.5" PointX="5.25" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Hotel_Reservation_SystemModel.Card_details" Width="1.5" PointX="7.625" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Hotel_Reservation_SystemModel.Customer" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Hotel_Reservation_SystemModel.Hotel" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Hotel_Reservation_SystemModel.Manager" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Hotel_Reservation_SystemModel.Payment" Width="1.5" PointX="8.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Hotel_Reservation_SystemModel.PinCode" Width="1.5" PointX="0.75" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Hotel_Reservation_SystemModel.Room" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
+        <AssociationConnector Association="Hotel_Reservation_SystemModel.fk_card_bank_id" ManuallyRouted="false" />
+        <AssociationConnector Association="Hotel_Reservation_SystemModel.Fk_Customer_id" ManuallyRouted="false" />
+        <AssociationConnector Association="Hotel_Reservation_SystemModel.Fk_Hotel_id" ManuallyRouted="false" />
+        <AssociationConnector Association="Hotel_Reservation_SystemModel.Fk_T_id" ManuallyRouted="false" />
+        <AssociationConnector Association="Hotel_Reservation_SystemModel.fk_Payment_Card_details" ManuallyRouted="false" />
+        <AssociationConnector Association="Hotel_Reservation_SystemModel.fk_pinCode_cust" ManuallyRouted="false" />
+        <AssociationConnector Association="Hotel_Reservation_SystemModel.FK_Hotels_Managers" ManuallyRouted="false" />
+        <AssociationConnector Association="Hotel_Reservation_SystemModel.FK_Hotels_PinCodes_id" ManuallyRouted="false" />
+        <AssociationConnector Association="Hotel_Reservation_SystemModel.fk_Payment_Hotels_id" ManuallyRouted="false" />
+        <AssociationConnector Association="Hotel_Reservation_SystemModel.Fk_Rooms_Hotel_Id" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

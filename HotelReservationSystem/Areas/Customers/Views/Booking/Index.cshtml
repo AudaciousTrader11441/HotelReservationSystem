@@ -1,0 +1,148 @@
+﻿
+@{
+    ViewBag.Title = "Booking";
+    string Cid = Session["CustomerID"].ToString();
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+<div class="container">
+    <div class="row">
+
+        
+        <div class="col-mg-10 main-content">
+            @Html.Partial("_Avilablehotel")
+        </div>
+        <div class="col-md-2">
+            @Html.Action("Details", "Register", new { area = "Customers" })
+        
+            @Html.Action("BookDisplay", "Booking", new { area = "Customers" })
+
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script>
+
+        $(document).ready(
+            function () {          
+                var getPage = function () {                    
+                    var $a = $(this);
+                    var dlstate = $('#States').val();
+                    var dlcity = $('#Cities').val();
+
+                    var options = {
+                        url: $a.attr("href"),
+                        data: { state: dlstate, city: dlcity },
+                        type: "get"
+                    };
+                    $.ajax(options).done(function (data) {
+                        var target = $a.parents("div.pagedList").attr("data-hotel-target");
+                        $(target).empty();
+                        $(target).append(data); 
+                    });
+                    return false;
+                };
+                $('.main-content').on('click', 'li a:not(li.disabled a)', getPage);
+
+                //$('.Hids').click(function () {
+                //    $.ajax({
+
+                //        type: 'get',
+                //        url: '/Customers/Booking/BookingDetails',
+                //        success: function (response) {
+                //            $('#myModalContent').empty();
+                //            $('#myModalContent').html(response);
+                //            $('#myModal').modal('show');
+                //        },
+                //        Error: function (xhr, ajaxOptions, thrownError) { alert(xhr.responseText); }
+
+                //    })
+
+
+                //}
+
+                //)
+
+
+                $('#btnReset').click(
+                    function () {
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '/Customers/Booking/GetHotels',
+
+                            success: function (response) {
+                                $('#Listingtable').empty();
+                                $('#Listingtable').append(response);
+                                $('#Cities').hide();
+                                $('#States').prop('selectedIndex', 0);
+                                $('#Cities').prop('selectedIndex', 0);
+                              
+                            },
+                            Error: function (xhr, ajaxOptions, thrownError) { alert(xhr.responseText); }
+
+                        });
+
+
+
+                    })
+
+
+
+
+                $('#States').change(
+                    function () {
+                        var dlstate = $(this).val();
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '/Customers/Booking/GetHotels',
+                            data: { state: dlstate },
+                            success: function (response) {
+                                $('#Listingtable').empty();
+                                $('#Listingtable').append(response);
+                                $.post('/Customers/Booking/GetCities', { state: dlstate }, function (response) {
+                                    $('#Cities').empty();
+
+                                    $.each(response, function (i, city) {
+                                        $('#Cities').append('<option value="' + city.Value + '">' +
+                                            city.Text + '</option>');
+                                    });
+
+
+                                });
+
+                                $('#Cities').show();
+
+                            },
+                            Error: function (xhr, ajaxOptions, thrownError) { alert(xhr.responseText); }
+
+                        })
+                    })
+                $('#Cities').change(
+                    function () {
+                        var dlstate = $('#States').val();
+                        var dlcity = $(this).val();
+                        $.ajax({
+                            type: 'POST',
+                            url: '/Customers/Booking/GetHotels',
+                            data: { state: dlstate, city: dlcity },
+                            success: function (response) {
+                                $('#Listingtable').empty();
+                                $('#Listingtable').append(response);
+
+
+                            },
+                            Error: function (xhr, ajaxOptions, thrownError) { alert(xhr.responseText); }
+
+                        })
+                    })
+
+            }
+
+        )
+
+    </script>
+}

@@ -1,0 +1,109 @@
+﻿@model IEnumerable<HotelReservationSystem.Areas.Managers.Models.VMhotels>
+
+@{
+    ViewBag.Title = "Hotel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    <div class="row">
+        
+        <div class="col-md-10">
+            <h2>Hotel managed by you </h2>
+            <br />
+            <div class="table-responsive">
+                <table class="table">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.name)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.hotel_description)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.no_of_ac_rooms)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.no_of_non_ac_rooms)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Cost_ac_adult)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Cost_non_ac_adult)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Cost_ac_child)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Cost_non_ac_child)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.state)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.city)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.pincode)
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.hotel_description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.no_of_ac_rooms)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.no_of_non_ac_rooms)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Cost_ac_adult)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Cost_non_ac_adult)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Cost_ac_child)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Cost_non_ac_child)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.state)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.city)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.pincode)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", "Hotels", new { area = "Managers", id = item.id }, new { @class = "btn btn-warning" })
+
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+            <p>
+                @Html.ActionLink("Add Hotel", "Create", "Hotels", new { area = "Managers" }, new { @class = "btn btn-success" })
+            </p>
+            </div>
+
+        
+        <div class=" col-md-2">
+            @Html.Action("Details", "Register", new { area = "Managers" })
+        </div>
+    </div>
+</div>
